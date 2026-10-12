@@ -26,10 +26,11 @@ jobs:
 
       - name: Put compiled PDF alongside the manuscript source
         run: |
-          if test -s manuscript/pythagorean_isotropy_ai_disclosure.pdf; then
-            echo "PDF is already in manuscript/."
-          elif test -s pythagorean_isotropy_ai_disclosure.pdf; then
-            mv pythagorean_isotropy_ai_disclosure.pdf manuscript/
+          if test -s pythagorean_isotropy_ai_disclosure.pdf; then
+            mv -f pythagorean_isotropy_ai_disclosure.pdf manuscript/
+            echo "Replaced the previous manuscript with the newly built PDF."
+          elif test -s manuscript/pythagorean_isotropy_ai_disclosure.pdf; then
+            echo "The LaTeX action generated its output directly inside manuscript/."
           else
             echo "LaTeX reported success but the PDF was not found."
             find . -maxdepth 4 -name '*.pdf' -print
