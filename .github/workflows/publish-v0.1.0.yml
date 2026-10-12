@@ -1,0 +1,91 @@
+name: Publish v0.1.0 for Zenodo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-v0.1.0.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Verify and publish one-time GitHub release
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout the exact release revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check release files and Zenodo metadata
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          meta = json.loads(pathlib.Path(".zenodo.json").read_text())
+          assert meta["upload_type"] == "software"
+          assert meta["access_right"] == "open"
+          assert meta["version"] == "0.1.0"
+          assert "license" not in meta, "Use Zenodo default as selected by the owner"
+          assert meta["creators"] == [{"name": "Odasso, Alessandro"}]
+          assert pathlib.Path("PythagoreanIsotropy.lean").is_file()
+          assert pathlib.Path("AXIOMS.md").is_file()
+          assert pathlib.Path("RELEASE_NOTES.md").is_file()
+          assert pathlib.Path("manuscript/pythagorean_isotropy_ai_disclosure.tex").is_file()
+          assert pathlib.Path("manuscript/pythagorean_isotropy_ai_disclosure.pdf").stat().st_size > 100000
+          print("Archival files and metadata validated.")
+          PY
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve pinned Mathlib revision
+        run: lake update
+
+      - name: Obtain Mathlib cache
+        run: lake exe cache get
+
+      - name: Verify Lean theorem and axiom audit before release
+        run: |
+          set -o pipefail
+          lake env lean PythagoreanIsotropy.lean 2>&1 | tee lean-release.log
+          python3 - <<'PY'
+          import pathlib, re
+          out=pathlib.Path("lean-release.log").read_text()
+          names=["primitive_quarter_turn_is_J",
+                 "determinant_one_from_primitive_rigidity",
+                 "infinitesimal_J_from_primitive_quarter_turn",
+                 "pythagoras_from_metric_free_quarter_turn"]
+          expected={"propext", "Classical.choice", "Quot.sound"}
+          for name in names:
+              prefix="PythagoreanIsotropy."+name
+              pattern=re.escape(prefix)+r"' depends on axioms:\s*\[([^\]]*)\]"
+              matches=re.findall(pattern,out,re.S)
+              if len(matches)!=1:
+                  raise SystemExit(f"Unexpected or missing axiom report: {prefix}")
+              axioms={v.strip() for v in matches[0].split(",") if v.strip()}
+              if axioms != expected:
+                  raise SystemExit(f"Unexpected axiom dependencies for {prefix}: {sorted(axioms)}")
+              print(f"Verified {prefix}: {sorted(axioms)}")
+          PY
+
+      - name: Publish v0.1.0 GitHub release after validation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view v0.1.0 >/dev/null 2>&1; then
+            echo "Release v0.1.0 already exists. No action taken."
+          else
+            gh release create v0.1.0 \
+              "manuscript/pythagorean_isotropy_ai_disclosure.pdf#Mathematical manuscript (PDF)" \
+              --target "$GITHUB_SHA" \
+              --title "Pythagorean Isotropy: Lean formalization and manuscript v0.1.0" \
+              --notes-file RELEASE_NOTES.md
+          fi
+          gh release view v0.1.0 --json url,tagName,isDraft,isPrerelease,targetCommitish
