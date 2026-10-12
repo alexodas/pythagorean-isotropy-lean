@@ -49,7 +49,7 @@ jobs:
           dependencies = {}
           for name in names:
               prefix = "PythagoreanIsotropy." + name
-              pattern = re.escape(prefix) + r"\u0027 depends on axioms:\s*\[([^\]]*)\]"
+              pattern = re.escape(prefix) + r"' depends on axioms:\s*\[([^\]]*)\]"
               matches = re.findall(pattern, output, flags=re.S)
               if len(matches) != 1:
                   raise SystemExit(f"Expected one '#print axioms' report for {prefix}; got {len(matches)}")
