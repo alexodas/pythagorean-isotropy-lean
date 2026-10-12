@@ -772,3 +772,21 @@ theorem pythagoras_from_metric_free_quarter_turn
   exact hquad
 
 end PythagoreanIsotropy
+
+
+/-!
+## Kernel-level axiom audit
+
+These commands are evaluated by Lean during compilation. They print the
+logical axioms the selected closed theorem declarations ultimately depend on.
+The geometric premises `hAction`, `hQ`, `hMember`, `hAxis`,
+`hMirror`, `hRigid`, `hToAxis`, and `hc` are explicit PARAMETERS
+of the main theorem, so they are not global `axiom` declarations and
+will not appear in `#print axioms` output. Consult AXIOMS.md for the
+full list of geometric assumptions and the meaning of this audit.
+-/
+
+#print axioms PythagoreanIsotropy.primitive_quarter_turn_is_J
+#print axioms PythagoreanIsotropy.determinant_one_from_primitive_rigidity
+#print axioms PythagoreanIsotropy.infinitesimal_J_from_primitive_quarter_turn
+#print axioms PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn
