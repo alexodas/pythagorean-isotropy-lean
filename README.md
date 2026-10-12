@@ -32,7 +32,9 @@ Selected theorems:
 | `infinitesimal_J_from_primitive_quarter_turn` | Derives the infinitesimal generator `ωJ` under differentiability and rigidity. |
 | `pythagoras_from_metric_free_quarter_turn` | Derives `a² + b² = c²` from the stated congruence, symmetry and axis-transitivity hypotheses. |
 
-## Explicit foundational assumptions
+## Explicit foundational assumptions and automated axiom audit
+
+**[Read AXIOMS.md for the precise eight geometric hypotheses and the kernel axiom audit.](./AXIOMS.md)**
 
 The final theorem **does not** assume the Pythagorean identity, a Euclidean norm, or a Euclidean inner product as the definition of geometric length. It does explicitly assume:
 
@@ -57,7 +59,9 @@ lake exe cache get
 lake env lean PythagoreanIsotropy.lean
 ```
 
-The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the same check on pushes and pull requests.
+The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the same check on pushes and pull requests and executes `#print axioms` for the main theorem and three supporting lemmas. It publishes the actual kernel-level dependencies in the build log, job summary, and an artifact named `lean-kernel-axiom-audit`. The action rejects reported `sorryAx` or `sorryAdmit` dependencies.
+
+**Important distinction:** `#print axioms` lists **Lean's global kernel axioms**, not geometric premises such as `hRigid` and `hToAxis`; those are **explicit theorem parameters** listed in [AXIOMS.md](./AXIOMS.md). A successful kernel audit is not a proof that the geometric assumptions are minimal, historically novel, or derivable from weaker axioms.
 
 ## Provenance and disclosure
 
