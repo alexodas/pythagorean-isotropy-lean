@@ -49,13 +49,17 @@ jobs:
           dependencies = {}
           for name in names:
               prefix = "PythagoreanIsotropy." + name
-              pattern = re.escape(prefix) + r" depends on axioms:\s*\[([^\]]*)\]"
+              pattern = re.escape(prefix) + r"\u0027 depends on axioms:\s*\[([^\]]*)\]"
               matches = re.findall(pattern, output, flags=re.S)
               if len(matches) != 1:
                   raise SystemExit(f"Expected one '#print axioms' report for {prefix}; got {len(matches)}")
               axioms = [x.strip() for x in matches[0].split(",") if x.strip()]
               dependencies[name] = axioms
               print(f"{prefix}: {axioms}")
+              allowed = {"propext", "Classical.choice", "Quot.sound"}
+              unknown = set(axioms) - allowed
+              if unknown:
+                  raise SystemExit(f"Unexpected logical axiom dependency in {prefix}: {sorted(unknown)}")
               if any("sorryAx" in a or "sorryAdmit" in a for a in axioms):
                   raise SystemExit(f"Untrusted admission detected in {prefix}: {axioms}")
 
