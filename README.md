@@ -74,7 +74,7 @@ The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the 
 
 ## Citation, Zenodo archive, and license
 
-This repository is being prepared for its first versioned public release, **v0.1.0**, and automatic archiving via its owner-connected Zenodo GitHub integration. The DOI must be verified on the published Zenodo record before it is cited.
+**[The first public GitHub release, v0.1.0, is published](https://github.com/alexodas/pythagorean-isotropy-lean/releases/tag/v0.1.0)**, with an attached manuscript PDF. It is intended to be automatically archived via the owner-connected Zenodo GitHub integration. **A Zenodo DOI has not yet been verified**, so do not cite a guessed identifier. The release fixes the exact research-software revision at commit `64c8ea3ef05d621814bc6460223f1f14d208f543`.
 
 The [Zenodo metadata](./.zenodo.json) identifies Alessandro Odasso as the human project initiator and describes the contributions of ChatGPT explicitly. No claim of exclusive human authorship of the AI-generated manuscript is made.
 
