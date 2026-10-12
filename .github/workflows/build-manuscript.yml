@@ -24,6 +24,18 @@ jobs:
         with:
           root_file: manuscript/pythagorean_isotropy_ai_disclosure.tex
 
+      - name: Put compiled PDF alongside the manuscript source
+        run: |
+          if test -s manuscript/pythagorean_isotropy_ai_disclosure.pdf; then
+            echo "PDF is already in manuscript/."
+          elif test -s pythagorean_isotropy_ai_disclosure.pdf; then
+            mv pythagorean_isotropy_ai_disclosure.pdf manuscript/
+          else
+            echo "LaTeX reported success but the PDF was not found."
+            find . -maxdepth 4 -name '*.pdf' -print
+            exit 1
+          fi
+
       - name: Check generated PDF
         run: |
           test -s manuscript/pythagorean_isotropy_ai_disclosure.pdf
