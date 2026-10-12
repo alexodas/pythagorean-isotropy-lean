@@ -53,9 +53,9 @@ The following four commands are executed by the public GitHub Action:
 #print axioms PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn
 ```
 
-Depending on Mathlib and Lean internals, the output can include foundational logical principles such as `propext`, `Classical.choice`, and `Quot.sound`. Those are not geometric length assumptions. Their appearance is not a circular use of the Pythagorean theorem.
+**Observed in the successful public Lean compilation (12 October 2026):** each of the four selected theorem declarations depends on exactly `propext`, `Classical.choice`, and `Quot.sound`. These are standard kernel-level logical axioms, **not** geometric length assumptions. Their appearance is not a circular use of the Pythagorean theorem. The CI audit now rejects any additional global axiom dependency, as well as `sorryAx` admissions, for these four declarations.
 
-The CI job captures the complete Lean log and **fails if the selected reported dependency sets contain a `sorryAx` admission**. Check the GitHub Actions logs for the actual per-theorem outputs. It is important not to mistake an absence of `sorryAx` for a proof of axiom minimality.
+The CI job captures the complete Lean log and **fails if any selected reported dependency set contains an axiom other than the three above**. Check the GitHub Actions logs for the actual per-theorem outputs. It is important not to mistake an absence of `sorryAx` for a proof of axiom minimality.
 
 ## 4. What the formalization does not establish
 
