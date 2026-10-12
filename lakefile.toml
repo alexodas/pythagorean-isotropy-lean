@@ -1,5 +1,8 @@
 name = "PythagoreanIsotropy"
 version = "0.1.0"
 
+[[require]]
+name = "mathlib"
+
 [[lean_lib]]
 name = "PythagoreanIsotropy"
