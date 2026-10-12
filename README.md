@@ -72,8 +72,12 @@ The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the 
 - **Claim limitation:** Neither formal compilation nor the prompt requesting originality establishes priority, historical novelty, or minimality of the axiom system.
 - **Repository scope:** No unrelated files from the earlier private development repository have been included.
 
-## Citation and licensing
+## Citation, Zenodo archive, and license
 
-For now, cite this repository by URL and commit hash. A versioned release may later be archived on Zenodo for a DOI.
+This repository is being prepared for its first versioned public release, **v0.1.0**, and automatic archiving via its owner-connected Zenodo GitHub integration. The DOI must be verified on the published Zenodo record before it is cited.
 
-**No open-source license has been selected yet.** Public visibility alone should not be interpreted as a license to redistribute or modify the material.
+The [Zenodo metadata](./.zenodo.json) identifies Alessandro Odasso as the human project initiator and describes the contributions of ChatGPT explicitly. No claim of exclusive human authorship of the AI-generated manuscript is made.
+
+**License choice:** For the Zenodo release archive, the owner selected **Zenodo's default CC BY 4.0 license**. The `license` field is deliberately omitted from `.zenodo.json`; Zenodo is expected to apply its default to the archived source and manuscript. Verify the effective license on the Zenodo record. **No separate `LICENSE` file has been added to this GitHub repository.** Its GitHub pages do not independently state an additional MIT or other software license. The applicable rights and permissions may differ between GitHub-hosted copies and files released under a Zenodo record.
+
+Until a DOI is confirmed, cite the repository by URL and exact commit SHA. The [v0.1.0 release notes](./RELEASE_NOTES.md) summarize the scientific and provenance disclosures.
