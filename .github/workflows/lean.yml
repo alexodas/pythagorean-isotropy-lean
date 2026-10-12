@@ -28,5 +28,61 @@ jobs:
       - name: Download Mathlib cache
         run: lake exe cache get
 
-      - name: Verify Pythagorean isotropy formalization
-        run: lake env lean PythagoreanIsotropy.lean
+      - name: Verify proof and display Lean kernel axiom dependencies
+        run: |
+          set -o pipefail
+          lake env lean PythagoreanIsotropy.lean 2>&1 | tee lean-axioms.log
+
+      - name: Reject admissions or missing audit output
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import re
+
+          output = pathlib.Path("lean-axioms.log").read_text()
+          names = [
+              "primitive_quarter_turn_is_J",
+              "determinant_one_from_primitive_rigidity",
+              "infinitesimal_J_from_primitive_quarter_turn",
+              "pythagoras_from_metric_free_quarter_turn",
+          ]
+          dependencies = {}
+          for name in names:
+              prefix = "PythagoreanIsotropy." + name
+              pattern = re.escape(prefix) + r" depends on axioms:\s*\[([^\]]*)\]"
+              matches = re.findall(pattern, output, flags=re.S)
+              if len(matches) != 1:
+                  raise SystemExit(f"Expected one '#print axioms' report for {prefix}; got {len(matches)}")
+              axioms = [x.strip() for x in matches[0].split(",") if x.strip()]
+              dependencies[name] = axioms
+              print(f"{prefix}: {axioms}")
+              if any("sorryAx" in a or "sorryAdmit" in a for a in axioms):
+                  raise SystemExit(f"Untrusted admission detected in {prefix}: {axioms}")
+
+          pathlib.Path("axiom-dependencies.md").write_text(
+              "# Lean kernel axiom dependency audit\n\n"
+              + "\n".join(
+                  f"- **{name}**: "
+                  + (", ".join(f"`{a}`" for a in axioms) if axioms else "(none)")
+                  for name, axioms in dependencies.items()
+              )
+              + "\n"
+          )
+          PY
+
+      - name: Publish audit summary
+        if: always()
+        run: |
+          if test -f axiom-dependencies.md; then
+            cat axiom-dependencies.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Save detailed audit output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-kernel-axiom-audit
+          path: |
+            lean-axioms.log
+            axiom-dependencies.md
+          if-no-files-found: warn
