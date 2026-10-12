@@ -59,7 +59,7 @@ lake exe cache get
 lake env lean PythagoreanIsotropy.lean
 ```
 
-The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the same check on pushes and pull requests and executes `#print axioms` for the main theorem and three supporting lemmas. It publishes the actual kernel-level dependencies in the build log, job summary, and an artifact named `lean-kernel-axiom-audit`. The action rejects reported `sorryAx` or `sorryAdmit` dependencies.
+The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the same check on pushes and pull requests and executes `#print axioms` for the main theorem and three supporting lemmas. It publishes the actual kernel-level dependencies in the build log, job summary, and an artifact named `lean-kernel-axiom-audit`. In the successful public audit, all four selected theorems depend only on `propext`, `Classical.choice`, and `Quot.sound`. The action now rejects any other reported kernel axiom dependency, including admitted proofs (`sorryAx`/`sorryAdmit`).
 
 **Important distinction:** `#print axioms` lists **Lean's global kernel axioms**, not geometric premises such as `hRigid` and `hToAxis`; those are **explicit theorem parameters** listed in [AXIOMS.md](./AXIOMS.md). A successful kernel audit is not a proof that the geometric assumptions are minimal, historically novel, or derivable from weaker axioms.
 
