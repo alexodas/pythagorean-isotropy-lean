@@ -4,7 +4,7 @@ This repository formalizes a mathematical answer to a precise question:
 
 > **If planar length is initially an unknown function, when do rigid planar symmetries force the Pythagorean formula?**
 
-The current `palomar-preparation` branch establishes a **characterization**: an axially calibrated function \(L : \mathbb R^2 \to \mathbb R\) admits a continuous additive **linear** action containing a primitive oriented quarter-turn and preserving \(L\) **if and only if**
+The current main branch include a **characterization**: an axially calibrated function \(L : \mathbb R^2 \to \mathbb R\) admits a continuous additive **linear** action containing a primitive oriented quarter-turn and preserving \(L\) **if and only if**
 
 \[
 L(x,y)=\sqrt{x^2+y^2}\quad\text{for every }x,y.
@@ -88,7 +88,15 @@ The newer result makes a different assumption tradeoff: continuity of two motion
 
 ## Lean environment and reproducibility
 
-This preparation uses the toolchain pinned in [`lean-toolchain`](./lean-toolchain): **Lean `v4.35.0-rc2`**, with a specific Mathlib revision pinned by [`lakefile.toml`](./lakefile.toml) and [`lake-manifest.json`](./lake-manifest.json). The package version is **`0.2.0`**, not an announced new release.
+The current development uses the toolchain pinned in
+[`lean-toolchain`](./lean-toolchain): **Lean `v4.35.0-rc2`**,
+with a specific Mathlib revision pinned by
+[`lakefile.toml`](./lakefile.toml) and
+[`lake-manifest.json`](./lake-manifest.json).
+
+The package version and publication metadata are prepared
+for **`0.2.0`**. The corresponding GitHub and Zenodo
+releases have not yet been published.
 
 With Lean, Lake, and the pinned toolchain available, from the repository root run:
 
@@ -126,16 +134,30 @@ The branch verification workflow is [`.github/workflows/palomar.yml`](./.github/
 
 ## Palomar preparation and publication procedure
 
-This branch is **preparation**, not an automatic submission to the Palomar Registry. Mechanical checking, independent mathematical review, research-interest assessment, and publication are different steps. The [Palomar preparation note](./PALOMAR.md) records the existing boundary.
 
-A responsible publication sequence, **only after the repository owner explicitly decides to submit**, is:
+## Palomar verification and scientific-review status
 
-1. **Freeze a reviewable commit** on `palomar-preparation`; record its **full commit SHA** and examine the difference from the archived release. Do not silently merge it into `main`.
-2. **Review the actual hypotheses and literature context**, especially the existence of the continuous linear action, the difference between finite symmetry and continuous isotropy, and the limits of any novelty claim.
-3. **Run and retain evidence** of packaging checks, source checks, `lake build`, Comparator, and independent kernel replay for **that exact commit**. Consult GitHub Actions logs and [`VERIFICATION.md`](./VERIFICATION.md); do not treat prior successful runs as proof of a different commit.
-4. **Check the prepared submission metadata and independent statement surface** in [`formalization.yaml`](./formalization.yaml), [`comparator.json`](./comparator.json), `Challenge.lean`, and `Solution.lean` against the Registry's then-current requirements. Changes to those files are **not** part of this documentation edit.
-5. **Submit through the applicable Palomar process only with explicit authorization** and cite the exact submitted commit. A passing Comparator result is not equivalent to Palomar acceptance. No submission, new release, new DOI, or Registry acceptance is claimed here.
+The continuous-isotropy development was submitted to Palomar
+at commit `57b2302e7f6176b2ab083ed836a6badd44eb0ded`,
+using [`comparator.json`](./comparator.json).
 
+Palomar's **mechanical verification passed**. Its automated
+review also confirmed that the selected formal statements
+agree with the mathematical account.
+
+However, the automated scientific review did **not**
+establish sufficient research interest for registration.
+No human scientific review was performed, and no Palomar
+registration or endorsement is claimed.
+
+The verified development was subsequently merged into
+`main`, where the repository is being prepared for its
+v0.2.0 GitHub and Zenodo release.
+
+Verification applies to specific commits. See
+[`VERIFICATION.md`](./VERIFICATION.md) for verification
+evidence and [`PALOMAR.md`](./PALOMAR.md) for the original
+submission context.
 
 ## Version history, citation, and license
 
@@ -188,9 +210,15 @@ Comparator verification. Palomar's automated mechanical verification
 also passed; its subsequent scientific-interest assessment did not
 approve the submission for registration.
 
-This development snapshot is not itself a published v0.2.0 GitHub or
-Zenodo release. Publication metadata will be updated when the new
-release is created.
+
+The repository's [Zenodo metadata](./.zenodo.json) and
+[citation metadata](./CITATION.cff) have been prepared
+for version `0.2.0`.
+
+The corresponding GitHub and Zenodo releases have
+**not yet been published**. The version-specific Zenodo
+DOI will be added after archiving.
+
 
 ### License
 
