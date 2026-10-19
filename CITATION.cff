@@ -1,12 +1,16 @@
 
 cff-version: 1.2.0
 
+
 message: >-
   Please cite the version-specific Zenodo record for the release you use.
-  The original v0.1.0 archive is available at
+  Version 0.2.0 is available at
+  https://doi.org/10.5281/zenodo.23482026.
+  The original v0.1.0 archive remains available at
   https://doi.org/10.5281/zenodo.23326197.
-  Version 0.2.0 is being prepared; its DOI will be added
-  after publication on Zenodo.
+  To cite the project across all versions, use
+  https://doi.org/10.5281/zenodo.23326196.
+
 
 type: software
 
@@ -36,9 +40,13 @@ abstract: >-
   establish correctness under the stated hypotheses, not
   historical novelty or minimality of those hypotheses.
 
+
 version: 0.2.0
+date-released: 2026-10-19
+doi: 10.5281/zenodo.23482026
 
 license: CC-BY-4.0
+
 
 url: https://github.com/alexodas/pythagorean-isotropy-lean
 
