@@ -1,0 +1,18 @@
+{
+  "archived_commit": "64c8ea3ef05d621814bc6460223f1f14d208f543",
+  "archived_tag": "v0.1.0",
+  "protected_files_sha256": {
+    ".zenodo.json": "06b6ef0602bcb2d62fdf3d17dd1054c0487acf0708e1a64348b1163e681e8b99",
+    "AXIOMS.md": "3a9dfcaac36fd27b3f5db65bf33fcd741759998378a83260146326528aa269a0",
+    "RELEASE_NOTES.md": "0ec30529ffda2435ebaf8119693a5d15e24b8efe770e6ab966fe77f0eab6965b",
+    "manuscript/pythagorean_isotropy_ai_disclosure.pdf": "686bb766e138173770a9dded1923efb369db3528bfd6e11751642485ff6c3de5",
+    "manuscript/pythagorean_isotropy_ai_disclosure.tex": "8e9155e520a76b35376fcff698e3b297cf3a58c3561ad94c6800c369558d383b"
+  },
+  "original_proof_text_sha256": "2bb8a46d3b772e80676b5480e15b391f0ab33d5b6bb73ae0e554e8173332f495",
+  "theorem_signatures_sha256": {
+    "PythagoreanIsotropy.primitive_quarter_turn_is_J": "ff3c0630b741442ea2608a83bc2a7ec7c4c15d6bca9681923b8b84201e48216e",
+    "PythagoreanIsotropy.determinant_one_from_primitive_rigidity": "fbd401616837b9731781260e4df12b6e72463b12ee833397536c88293afcd75e",
+    "PythagoreanIsotropy.infinitesimal_J_from_primitive_quarter_turn": "390f70699f0f0b6ff82611c551466e7c78f1e67471e71f23ca27b36f7b60674d",
+    "PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn": "00c94b9adffdfc3e7d3b26048b4aa7dbe19125694fce4a161036ae237df2d688"
+  }
+}

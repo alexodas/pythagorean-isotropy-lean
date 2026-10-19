@@ -1,5 +1,22 @@
 # The Coordinate Pythagorean Theorem from Planar Isotropy — Lean 4
 
+> **Palomar preparation (package 0.1.1; no new release).**
+> The published `v0.1.0` tag and Zenodo record remain unchanged.
+> This branch adds an independent Challenge, Solution re-export, Comparator
+> configuration and provenance metadata, and ports to Lean `v4.35.0-rc2`.
+> Read [PALOMAR.md](./PALOMAR.md) for exact scope, checks and submission steps.
+> The Lean build and axiom audit passed locally. Full Comparator validation is
+> still required before submission; see [VERIFICATION.md](./VERIFICATION.md).
+
+The intended specialist audience is formalized foundations of Euclidean
+geometry and the relation between planar symmetries, primitive length and
+quadratic invariants. The contribution presented for assessment is an explicit
+conditional dependency chain: it separates the length function from the
+quadratic coordinate expression and exposes the exact hypotheses used by this
+derivation. This is not a claim of a new identity, historical priority, or a
+minimal axiom system. Palomar's research-interest assessment remains separate
+from mechanical correctness.
+
 A Lean 4 + Mathlib formalization accompanying an **AI-generated mathematical manuscript** titled
 *The Coordinate Pythagorean Theorem from Planar Isotropy: An Axiomatic Derivation with Lie-Theoretic Extensions* (original draft: 18 August 2026; revised and extended edition: 12 October 2026).
 
@@ -11,7 +28,7 @@ The project formalizes an axiomatic implication from **primitive congruence and 
 
 - **[Read the revised manuscript (PDF)](./manuscript/pythagorean_isotropy_ai_disclosure.pdf)** — AI-authorship disclosure appears on the title page and at the start of Section 1.
 - [LaTeX source](./manuscript/pythagorean_isotropy_ai_disclosure.tex) — reproducible source for the manuscript.
-- [PDF build workflow](./.github/workflows/build-manuscript.yml) — builds the PDF and commits the generated manuscript file.
+- [PDF build workflow](./.github/workflows/build-manuscript.yml) — builds the PDF as an artifact without committing or publishing it.
 
 The revised manuscript now gives the **algebraic group-theoretic argument as its main proof**, and treats the infinitesimal generator and quadratic-form classification as **Lie-theoretic extensions**. It retains the August argument as a supplementary derivation and distinguishes it from the later Lean-verified developments.
 
@@ -54,9 +71,9 @@ For the separate infinitesimal-generator theorem, the requisite derivatives at z
 The exact Lean toolchain and a pinned Mathlib revision are provided.
 
 ```bash
-lake update
-lake exe cache get
-lake env lean PythagoreanIsotropy.lean
+lake exe cache get Mathlib.Analysis.Calculus.Deriv.Pow Mathlib.Analysis.Calculus.MeanValue Mathlib.Tactic.Convert Mathlib.Tactic.Linarith Mathlib.Tactic.Ring
+lake build
+bash scripts/verify-comparator.sh
 ```
 
 The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the same check on pushes and pull requests and executes `#print axioms` for the main theorem and three supporting lemmas. It publishes the actual kernel-level dependencies in the build log, job summary, and an artifact named `lean-kernel-axiom-audit`. In the successful public audit, all four selected theorems depend only on `propext`, `Classical.choice`, and `Quot.sound`. The action now rejects any other reported kernel axiom dependency, including admitted proofs (`sorryAx`/`sorryAdmit`).
@@ -74,10 +91,23 @@ The GitHub Actions workflow [`lean.yml`](./.github/workflows/lean.yml) runs the 
 
 ## Citation, Zenodo archive, and license
 
-This repository is being prepared for its first versioned public release, **v0.1.0**, and automatic archiving via its owner-connected Zenodo GitHub integration. The DOI must be verified on the published Zenodo record before it is cited.
+The archived version is **v0.1.0**, commit
+`64c8ea3ef05d621814bc6460223f1f14d208f543`, published on 12 October 2026:
+[Zenodo version DOI 10.5281/zenodo.23326197](https://doi.org/10.5281/zenodo.23326197).
+The archived manuscript and `.zenodo.json` retain their original contents.
+The archived README can be inspected at that exact GitHub commit.
 
-The [Zenodo metadata](./.zenodo.json) identifies Alessandro Odasso as the human project initiator and describes the contributions of ChatGPT explicitly. No claim of exclusive human authorship of the AI-generated manuscript is made.
+This preparation is package version **0.1.1**. It creates no GitHub release or
+Zenodo DOI and must not be cited as the identical archived source. A future
+Palomar record must identify the new preparation's full commit SHA, with the
+existing DOI retained as the source reference.
 
-**License choice:** For the Zenodo release archive, the owner selected **Zenodo's default CC BY 4.0 license**. The `license` field is deliberately omitted from `.zenodo.json`; Zenodo is expected to apply its default to the archived source and manuscript. Verify the effective license on the Zenodo record. **No separate `LICENSE` file has been added to this GitHub repository.** Its GitHub pages do not independently state an additional MIT or other software license. The applicable rights and permissions may differ between GitHub-hosted copies and files released under a Zenodo record.
+At the owner's explicit choice, this preparation uses **CC BY 4.0**, matching
+the published Zenodo record. See [LICENSE](./LICENSE). Sources and external
+dependencies retain their own licences. The new root licence does not rewrite
+the historical tag or its original README.
 
-Until a DOI is confirmed, cite the repository by URL and exact commit SHA. The [v0.1.0 release notes](./RELEASE_NOTES.md) summarize the scientific and provenance disclosures.
+The [Zenodo metadata](./.zenodo.json), [AXIOMS.md](./AXIOMS.md) and
+[release notes](./RELEASE_NOTES.md) preserve the original research and AI
+disclosures. Additional Palomar metadata appears in
+[formalization.yaml](./formalization.yaml).

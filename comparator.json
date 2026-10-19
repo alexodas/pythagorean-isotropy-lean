@@ -1,0 +1,22 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "PythagoreanIsotropy.primitive_quarter_turn_is_J",
+    "PythagoreanIsotropy.determinant_one_from_primitive_rigidity",
+    "PythagoreanIsotropy.infinitesimal_J_from_primitive_quarter_turn",
+    "PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn"
+  ],
+  "definition_names": [
+    "PythagoreanIsotropy.LinearPlaneEnd.act",
+    "PythagoreanIsotropy.IsPrimitiveQuarterTurn",
+    "PythagoreanIsotropy.AdditiveLinearAction",
+    "PythagoreanIsotropy.IsRigidLinearAction",
+    "PythagoreanIsotropy.PrimitiveRigid"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

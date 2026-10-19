@@ -1,4 +1,13 @@
-import Mathlib
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.MeanValue
+import Mathlib.Tactic.Convert
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+
+public section
 
 /-!
 # The coordinate Pythagorean theorem from planar isotropy
@@ -136,11 +145,11 @@ foundational argument is needed to obtain them from primitive congruence.
 -/
 
 /-- The most general real linear planar infinitesimal generator. -/
-def linearGenerator (p q r s x y : ℝ) : ℝ × ℝ :=
+@[expose] def linearGenerator (p q r s x y : ℝ) : ℝ × ℝ :=
   (p * x + q * y, r * x + s * y)
 
 /-- `A K = K A` where `K(x,y)=(-y,x)`. -/
-def CommutesQuarterTurn (p q r s : ℝ) : Prop :=
+@[expose] def CommutesQuarterTurn (p q r s : ℝ) : Prop :=
   ∀ x y : ℝ,
     linearGenerator p q r s (-y) x =
       (-(linearGenerator p q r s x y).2,
@@ -148,7 +157,7 @@ def CommutesQuarterTurn (p q r s : ℝ) : Prop :=
 
 /-- `A S = - S A` where `S(x,y)=(x,-y)`.
 This is the differentiated form of mirror reversal of the flow. -/
-def ReversesUnderReflection (p q r s : ℝ) : Prop :=
+@[expose] def ReversesUnderReflection (p q r s : ℝ) : Prop :=
   ∀ x y : ℝ,
     linearGenerator p q r s x (-y) =
       (-(linearGenerator p q r s x y).1,
@@ -335,12 +344,12 @@ is NOT formalized here.
 -/
 
 /-- Coordinates of a real linear map commuting with the calibrated quarter-turn. -/
-def quarterTurnFlow (u v x y : ℝ) : ℝ × ℝ :=
+@[expose] def quarterTurnFlow (u v x y : ℝ) : ℝ × ℝ :=
   (u * x - v * y, v * x + u * y)
 
 /-- Primitive geometric rigidity of such a map; L is *not* defined
 by the Cartesian Euclidean distance expression. -/
-def PrimitiveRigid (L : ℝ → ℝ → ℝ) (u v : ℝ) : Prop :=
+@[expose] def PrimitiveRigid (L : ℝ → ℝ → ℝ) (u v : ℝ) : Prop :=
   ∀ x y : ℝ, L (u * x - v * y) (v * x + u * y) = L x y
 
 /-- Rigidity plus axial calibration and reflection symmetry implies
@@ -372,7 +381,7 @@ theorem determinant_one_from_primitive_rigidity
   nlinarith
 
 /-- Algebraic oriented area of a parallelogram based at the origin. -/
-def orientedArea (x₁ y₁ x₂ y₂ : ℝ) : ℝ :=
+@[expose] def orientedArea (x₁ y₁ x₂ y₂ : ℝ) : ℝ :=
   x₁ * y₂ - y₁ * x₂
 
 /-- We obtain *area preservation*, in the literal determinant sense,
@@ -589,13 +598,13 @@ structure LinearPlaneEnd where
   d : ℝ
 
 namespace LinearPlaneEnd
-def act (F : LinearPlaneEnd) (x y : ℝ) : ℝ × ℝ :=
+@[expose] def act (F : LinearPlaneEnd) (x y : ℝ) : ℝ × ℝ :=
   (F.a * x + F.b * y, F.c * x + F.d * y)
 end LinearPlaneEnd
 
 /-- A primitive oriented quarter-turn: it exchanges the oriented axes and
 its square is a central half-turn, with no metric in the definition. -/
-def IsPrimitiveQuarterTurn (Q : LinearPlaneEnd) : Prop :=
+@[expose] def IsPrimitiveQuarterTurn (Q : LinearPlaneEnd) : Prop :=
   Q.act 1 0 = (0, 1) ∧
   ∀ x y : ℝ,
     Q.act (Q.act x y).1 (Q.act x y).2 = (-x, -y)
@@ -655,7 +664,7 @@ theorem commuting_with_primitive_quarter_turn
   · change F.c * x + F.d * y = F.c * x + F.a * y
     rw [hd]
 
-def AdditiveLinearAction (F : ℝ → LinearPlaneEnd) : Prop :=
+@[expose] def AdditiveLinearAction (F : ℝ → LinearPlaneEnd) : Prop :=
   ∀ s t x y : ℝ,
     (F (s + t)).act x y =
       (F s).act ((F t).act x y).1 ((F t).act x y).2
@@ -684,7 +693,7 @@ theorem primitive_quarter_turn_forces_flow_shape
   intro t x y
   exact commuting_with_primitive_quarter_turn Q (F t) hQ (hComm t) x y
 
-def IsRigidLinearAction (L : ℝ → ℝ → ℝ)
+@[expose] def IsRigidLinearAction (L : ℝ → ℝ → ℝ)
     (F : ℝ → LinearPlaneEnd) : Prop :=
   ∀ t x y : ℝ,
     L ((F t).act x y).1 ((F t).act x y).2 = L x y
