@@ -15,12 +15,15 @@ and finite-symmetry obstruction developed in RESEARCH.md.
 Only their proofs are deliberately replaced by `sorry` in this Challenge.
 
 `L` is an arbitrary primitive length function, not a definition by a norm.
-Linearity is built into the four-coordinate structure below. The action law,
+Linearity is built into the four-coordinate structure below. In the four
+archived declarations, the action law,
 quarter-turn membership, axial calibration, mirror symmetry, rigidity and
 axis reachability are assumptions. In particular the existence of such an
 action and reachability do not follow here from weaker incidence axioms.
-The final theorem needs reachability for the chosen vector only. No positivity
-of a or b, continuity of the action, or differentiability is assumed there.
+The archived `pythagoras_from_metric_free_quarter_turn` needs reachability for
+the chosen vector only. No positivity of a or b, continuity of the action, or
+differentiability is assumed in that archived theorem. The new continuous
+characterization below instead derives reachability and mirror symmetry.
 The separate infinitesimal theorem has its own derivative assumptions.
 
 This is a formalized conditional derivation of a known identity. It establishes

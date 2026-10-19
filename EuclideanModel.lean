@@ -1,8 +1,8 @@
 module
 
 public import PythagoreanIsotropy
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.Real.Sqrt
 
 public section
 
@@ -17,10 +17,10 @@ Euclidean geometry from synthetic axioms, and does not establish novelty.
 
 namespace PythagoreanIsotropy
 
-@[expose] def euclideanLength (x y : ℝ) : ℝ :=
+@[expose] noncomputable def euclideanLength (x y : ℝ) : ℝ :=
   Real.sqrt (x ^ 2 + y ^ 2)
 
-@[expose] def standardRotation (t : ℝ) : LinearPlaneEnd where
+@[expose] noncomputable def standardRotation (t : ℝ) : LinearPlaneEnd where
   a := Real.cos t
   b := -Real.sin t
   c := Real.sin t
