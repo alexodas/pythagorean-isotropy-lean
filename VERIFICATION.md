@@ -1,69 +1,51 @@
 # Verification record
 
-Prepared on 19 October 2026 from archived commit
-`64c8ea3ef05d621814bc6460223f1f14d208f543`.
+## Archive boundary
 
-## Completed preservation and packaging checks
+Archived commit: `64c8ea3ef05d621814bc6460223f1f14d208f543`, tag `v0.1.0`.
+The archive-preservation script still verifies the exact old proof text after
+removing only the documented module/import adaptation, plus the unchanged
+manuscript, `.zenodo.json`, `AXIOMS.md`, and `RELEASE_NOTES.md`.
+The four archived Challenge signatures are still checked against their
+original SHA-256 hashes. New theorems are added in separate modules.
 
-- The public GitHub `v0.1.0` tag resolves to the archived commit above.
-- Existing GitHub release ID: `410986254`.
-- Existing release PDF SHA-256:
-  `686bb766e138173770a9dded1923efb369db3528bfd6e11751642485ff6c3de5`.
-- The local PDF also matches the public release asset digest above.
-- The archived PDF, manuscript source, `.zenodo.json`, `AXIOMS.md` and
-  `RELEASE_NOTES.md` match the archived Git blobs, using canonical LF text.
-- Removing only the documented module/import/visibility adaptation recovers
-  the exact original mathematical proof source.
-- All four independent Challenge theorem signatures match the archived source
-  signatures exactly, including each explicit hypothesis.
-- The Challenge imports only the pinned Mathlib derivative basics, contains
-  four intentional proof placeholders, and meets the source-size limits.
-- Every project Lean source uses `module` and meets the 10,000-line cap.
-- `formalization.yaml` validates against the official upstream v0.4 schema.
-- The Mathlib revision agrees between Lake configuration and the committed
-  manifest, and every dependency revision is pinned to a full commit.
-- Every retained/new workflow has `contents: read`; there is no release
-  publisher or automatic branch-write step in this preparation.
-- `git diff --check` passed.
+The observed `main` commit before this extension is
+`3de6c3fbc0c659b2121f222e6d69437e106a4926`. The archived PDF SHA-256 is
+`686bb766e138173770a9dded1923efb369db3528bfd6e11751642485ff6c3de5`.
 
-Schema reference commit: `99c678e569c7c4c0772db297c5ddd5e4c9b6322e` in
-`mathlib-initiative/formalization.yaml`.
-Starter reference commit: `2891de4c48955af824969a263d31b25e7a9a1406` in
-`PalomarRegistry/PalomarTemplate`.
+## Previously completed checks, before the new extension
 
-## Lean and independent proof verification
+The preparation at `90c09aacea965686925cc41e588f395b254c0c69` passed its
+[GitHub verification](https://github.com/alexodas/pythagorean-isotropy-lean/actions/runs/39231914593)
+and [Palomar mechanical verification](https://github.com/PalomarRegistry/PalomarSubmission/actions/runs/39233022143).
+Those results concern the earlier four-theorem package. They must not be
+mistaken for verification of newly added code.
 
-`lake build` **passed**, reporting "Build completed successfully (2101 jobs)"
-with Lean `v4.35.0-rc2` in an isolated temporary Linux workspace. It built
-`Challenge`, `PythagoreanIsotropy` and `Solution` successfully. The four
-Challenge admission warnings are deliberate. The remaining proof-source
-warnings are style-linter messages inherited from the preserved proof text.
+## Current continuous-isotropy extension
 
-The four selected proof declarations each printed exactly the permitted
-dependencies `propext`, `Classical.choice`, and `Quot.sound`. No extra axiom
-was reported in those audits.
+The independent Challenge now selects eleven theorems and six definitions.
+Its eleven `sorry` placeholders are intentional specification placeholders.
+The proof modules have no admitted proofs or new global axioms.
 
-The final Comparator run **could not complete** in the local environment:
-Debian's Bubblewrap `0.4.1` rejects the sandbox flag `--clearenv` used by the
-bundled Comparator. The environment also lacks the development tools needed
-for a straightforward isolated Bubblewrap build. The sandbox was not disabled
-or bypassed. The script now detects that missing capability explicitly.
+Completed while developing this extension:
 
-This is an environment limitation, not a successful Comparator result. The
-included `.github/workflows/palomar.yml` runs the full comparison and bundled
-independent kernels on a current Ubuntu runner. That check remains required
-before describing the preparation as fully verified for submission. Local
-compilation and a kernel-axiom audit do not replace it.
+- The archive/signature preservation script and source-format checks pass.
+- `ContinuousIsotropy.lean` compiled successfully with the pinned Lean
+  `v4.35.0-rc2`; its reachability and length audits report only `propext`,
+  `Classical.choice`, and `Quot.sound`.
+- The compact multiplicative-character lemma compiled successfully.
+- The initial max-norm development, including exact classification of its
+  normal-form isometries, compiled successfully. A later direct-action
+  impossibility corollary is included in the full verification target.
 
-## External state
+The full integrated Lake build and eleven-theorem Comparator check are
+required for the current commit. Consult the
+[Palomar preparation workflow](https://github.com/alexodas/pythagorean-isotropy-lean/actions/workflows/palomar.yml)
+for its exact result; a green run must correspond to the current source.
+Local Debian Bubblewrap is too old for the bundled Comparator, so the full
+sandboxed comparison and independent kernels run on the Ubuntu CI runner.
+The sandbox is not disabled to obtain a local result.
 
-Only the separate `palomar-preparation` branch is intended for publication.
-Publication was attempted but did not succeed: the GitHub connector returned
-HTTP 403 (integration access), and local Git had no authenticated session.
-No remote branch was created and no repository content was changed remotely.
-The existing `main` branch, tags, releases and Zenodo records are not changed.
-The observed `main` commit before publication was
-`3de6c3fbc0c659b2121f222e6d69437e106a4926`.
-No Palomar submission is made by this preparation. The source DOI remains
-<https://doi.org/10.5281/zenodo.23326197>. A future Palomar submission must name
-the new preparation commit, not the archived release commit.
+Lean checks and Comparator checks establish the stated implications, not
+historical novelty, axiom minimality, or mathematical research interest.
+See `RESEARCH.md` for the classical context and exact assumption tradeoff.

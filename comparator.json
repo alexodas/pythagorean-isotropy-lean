@@ -5,14 +5,22 @@
     "PythagoreanIsotropy.primitive_quarter_turn_is_J",
     "PythagoreanIsotropy.determinant_one_from_primitive_rigidity",
     "PythagoreanIsotropy.infinitesimal_J_from_primitive_quarter_turn",
-    "PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn"
+    "PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn",
+    "PythagoreanIsotropy.axis_reachable_of_continuous_action",
+    "PythagoreanIsotropy.continuous_action_preserves_quadratic",
+    "PythagoreanIsotropy.length_eq_sqrt_without_mirror",
+    "PythagoreanIsotropy.continuous_isotropy_iff_euclidean_length",
+    "PythagoreanIsotropy.Counterexamples.boxLength_rigid_normal_iff",
+    "PythagoreanIsotropy.Counterexamples.boxLength_not_pythagorean",
+    "PythagoreanIsotropy.Counterexamples.boxLength_no_additive_quarter_turn_action"
   ],
   "definition_names": [
     "PythagoreanIsotropy.LinearPlaneEnd.act",
     "PythagoreanIsotropy.IsPrimitiveQuarterTurn",
     "PythagoreanIsotropy.AdditiveLinearAction",
     "PythagoreanIsotropy.IsRigidLinearAction",
-    "PythagoreanIsotropy.PrimitiveRigid"
+    "PythagoreanIsotropy.PrimitiveRigid",
+    "PythagoreanIsotropy.Counterexamples.boxLength"
   ],
   "permitted_axioms": [
     "propext",

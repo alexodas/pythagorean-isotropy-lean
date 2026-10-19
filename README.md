@@ -1,12 +1,23 @@
 # The Coordinate Pythagorean Theorem from Planar Isotropy — Lean 4
 
-> **Palomar preparation (package 0.1.1; no new release).**
-> The published `v0.1.0` tag and Zenodo record remain unchanged.
-> This branch adds an independent Challenge, Solution re-export, Comparator
-> configuration and provenance metadata, and ports to Lean `v4.35.0-rc2`.
-> Read [PALOMAR.md](./PALOMAR.md) for exact scope, checks and submission steps.
-> The Lean build and axiom audit passed locally. Full Comparator validation is
-> still required before submission; see [VERIFICATION.md](./VERIFICATION.md).
+> **Continuous-isotropy development (package 0.2.0; no new release).**
+> The new theorem characterizes all calibrated functions admitting a continuous
+> additive linear quarter-turn action: exactly `L(x,y)=sqrt(x²+y²)`. Axis
+> reachability and mirror symmetry are derived, with an explicit model proving
+> the converse. A separate max-norm development classifies the finite-symmetry
+> obstruction. This adds continuity of the action; it does not derive the
+> existence of isotropy from synthetic geometry. See [RESEARCH.md](RESEARCH.md)
+> for the exact assumption tradeoff, proof and known mathematical context,
+> and [VERIFICATION.md](VERIFICATION.md) for completed checks. No claim of
+> historical novelty or research-registry acceptance is made.
+
+The published `v0.1.0` tag, release and Zenodo record remain unchanged.
+This branch uses Lean `v4.35.0-rc2`, pinned Mathlib and CC BY 4.0. It includes
+independent Challenge statements and Comparator configuration for both the
+archived results and the new development. No merge into `main` or further
+Palomar submission is performed. See [PALOMAR.md](PALOMAR.md).
+
+## Archived development and mathematical context
 
 The intended specialist audience is formalized foundations of Euclidean
 geometry and the relation between planar symmetries, primitive length and
@@ -97,7 +108,7 @@ The archived version is **v0.1.0**, commit
 The archived manuscript and `.zenodo.json` retain their original contents.
 The archived README can be inspected at that exact GitHub commit.
 
-This preparation is package version **0.1.1**. It creates no GitHub release or
+This preparation is package version **0.2.0**. It creates no GitHub release or
 Zenodo DOI and must not be cited as the identical archived source. A future
 Palomar record must identify the new preparation's full commit SHA, with the
 existing DOI retained as the source reference.

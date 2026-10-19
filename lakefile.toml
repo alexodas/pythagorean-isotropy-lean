@@ -1,6 +1,6 @@
 name = "PythagoreanIsotropy"
-version = "0.1.1"
-defaultTargets = ["PythagoreanIsotropy", "Challenge", "Solution"]
+version = "0.2.0"
+defaultTargets = ["PythagoreanIsotropy", "Research", "Challenge", "Solution"]
 
 [[require]]
 name = "mathlib"
@@ -17,3 +17,7 @@ roots = ["Challenge"]
 [[lean_lib]]
 name = "Solution"
 roots = ["Solution"]
+
+[[lean_lib]]
+name = "Research"
+roots = ["CompactCharacter", "ContinuousIsotropy", "CompactIsotropy", "EuclideanModel", "IsotropyCharacterization", "IsotropyCounterexamples"]

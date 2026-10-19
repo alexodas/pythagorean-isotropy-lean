@@ -1,6 +1,7 @@
 module
 
 public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Real.Sqrt
 
 public section
 
@@ -8,7 +9,9 @@ public section
 # Coordinate Pythagorean identity from explicit planar symmetry hypotheses
 
 This statement surface is independent of the project proof module. The four
-compared theorems retain exactly the signatures of the archived v0.1.0 source.
+archived theorems retain exactly the signatures of the v0.1.0 source.
+Additional statements below describe the continuous-action characterization
+and finite-symmetry obstruction developed in RESEARCH.md.
 Only their proofs are deliberately replaced by `sorry` in this Challenge.
 
 `L` is an arbitrary primitive length function, not a definition by a norm.
@@ -105,5 +108,89 @@ theorem pythagoras_from_metric_free_quarter_turn
     (hc : L a b = c) :
     a ^ 2 + b ^ 2 = c ^ 2 := by
   sorry
+
+end PythagoreanIsotropy
+
+/-! New development: continuity replaces per-vector reachability, compactness
+removes the mirror premise, and an explicit model supplies the converse.
+These statements do not assert historical novelty. -/
+
+namespace PythagoreanIsotropy
+
+theorem axis_reachable_of_continuous_action
+    (F : ℝ → LinearPlaneEnd) (Q : LinearPlaneEnd)
+    (hAction : AdditiveLinearAction F)
+    (hQ : IsPrimitiveQuarterTurn Q)
+    (hMember : ∃ θ : ℝ, F θ = Q)
+    (hContinuousA : Continuous (fun t : ℝ => (F t).a))
+    (hContinuousC : Continuous (fun t : ℝ => (F t).c))
+    (a b : ℝ) :
+    ∃ t z : ℝ, 0 ≤ z ∧ (F t).act a b = (z, 0) := by
+  sorry
+
+theorem continuous_action_preserves_quadratic
+    (F : ℝ → LinearPlaneEnd) (Q : LinearPlaneEnd)
+    (hAction : AdditiveLinearAction F) (hQ : IsPrimitiveQuarterTurn Q)
+    (hMember : ∃ θ : ℝ, F θ = Q)
+    (hContinuousA : Continuous (fun t : ℝ => (F t).a))
+    (hContinuousC : Continuous (fun t : ℝ => (F t).c)) :
+    ∀ t x y : ℝ,
+      ((F t).act x y).1 ^ 2 + ((F t).act x y).2 ^ 2 = x ^ 2 + y ^ 2 := by
+  sorry
+
+theorem length_eq_sqrt_without_mirror
+    (L : ℝ → ℝ → ℝ) (F : ℝ → LinearPlaneEnd) (Q : LinearPlaneEnd)
+    (hAction : AdditiveLinearAction F) (hQ : IsPrimitiveQuarterTurn Q)
+    (hMember : ∃ θ : ℝ, F θ = Q)
+    (hContinuousA : Continuous (fun t : ℝ => (F t).a))
+    (hContinuousC : Continuous (fun t : ℝ => (F t).c))
+    (hAxis : ∀ z : ℝ, L z 0 = |z|)
+    (hRigid : IsRigidLinearAction L F) :
+    ∀ x y : ℝ, L x y = Real.sqrt (x ^ 2 + y ^ 2) := by
+  sorry
+
+theorem continuous_isotropy_iff_euclidean_length
+    (L : ℝ → ℝ → ℝ)
+    (hAxis : ∀ z : ℝ, L z 0 = |z|) :
+    (∃ (F : ℝ → LinearPlaneEnd) (Q : LinearPlaneEnd),
+      AdditiveLinearAction F ∧
+      IsPrimitiveQuarterTurn Q ∧
+      (∃ θ : ℝ, F θ = Q) ∧
+      Continuous (fun t : ℝ => (F t).a) ∧
+      Continuous (fun t : ℝ => (F t).c) ∧
+      IsRigidLinearAction L F) ↔
+    (∀ x y : ℝ, L x y = Real.sqrt (x ^ 2 + y ^ 2)) := by
+  sorry
+
+namespace Counterexamples
+
+@[expose] def boxLength (x y : ℝ) : ℝ := max |x| |y|
+
+theorem boxLength_rigid_normal_iff (u v : ℝ) :
+    PrimitiveRigid boxLength u v ↔
+      (u = 0 ∧ |v| = 1) ∨ (|u| = 1 ∧ v = 0) := by
+  sorry
+
+end Counterexamples
+
+namespace Counterexamples
+
+theorem boxLength_not_pythagorean :
+    ¬ ∀ x y : ℝ, x ^ 2 + y ^ 2 = boxLength x y ^ 2 := by
+  sorry
+
+end Counterexamples
+
+namespace Counterexamples
+
+theorem boxLength_no_additive_quarter_turn_action
+    (F : ℝ → LinearPlaneEnd) (Q : LinearPlaneEnd)
+    (hAction : AdditiveLinearAction F)
+    (hQ : IsPrimitiveQuarterTurn Q)
+    (hMember : ∃ θ : ℝ, F θ = Q) :
+    ¬ IsRigidLinearAction boxLength F := by
+  sorry
+
+end Counterexamples
 
 end PythagoreanIsotropy

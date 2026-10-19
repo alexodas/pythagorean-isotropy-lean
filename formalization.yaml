@@ -2,7 +2,7 @@
   "version": "v0.4",
   "project": {
     "name": "The Coordinate Pythagorean Theorem from Planar Isotropy",
-    "description": "A conditional derivation of the coordinate Pythagorean identity from an explicit additive linear action containing an oriented quarter-turn, axial length calibration, mirror symmetry, rigidity and axis reachability. Supporting results determine the quarter-turn matrix, eliminate radial scaling, and characterize an infinitesimal generator under additional differentiability assumptions.",
+    "description": "A characterization of arbitrary axially calibrated planar length functions admitting a continuous additive linear action containing a primitive quarter-turn: exactly the Euclidean square-root formula. Compactness derives quadratic preservation without mirror symmetry; the intermediate value theorem derives global axis reachability. An explicit trigonometric model proves the converse. A max-norm counterexample classifies its four rotation-coordinate isometries and excludes an additive real quarter-turn action. This extends the archived conditional derivation; historical novelty is not claimed.",
     "authors": [
       "Alessandro Odasso"
     ],
@@ -46,7 +46,7 @@
     }
   ],
   "status": {
-    "scope": "Four selected declarations are presented to Comparator: quarter-turn normalization, determinant one from primitive rigidity, the infinitesimal generator under derivative assumptions, and the final conditional Pythagorean identity. Other development theorems are retained but are not separately advertised in comparator.json. No derivation of the entire action from weaker incidence axioms, hypothesis independence/minimality, historical novelty or full formalization of the Lie-theoretic manuscript discussion is claimed.",
+    "scope": "Eleven selected theorem declarations: the four unchanged archived results plus derived global reachability, length-independent quadratic preservation, mirror-free length characterization, an existence equivalence with explicit Euclidean model, and three max-norm obstruction results. Continuity of the action is an added premise in the characterization. The existence of these symmetries is not derived from weaker incidence/congruence axioms. See RESEARCH.md for the distinction from classical norm-isometry characterizations; no novelty or minimality claim.",
     "sorry_count": 0,
     "sorry_in_definitions": 0,
     "axioms": [
@@ -70,20 +70,20 @@
         "method": "agent",
         "models": [],
         "framework": "OpenAI Codex desktop",
-        "tool_setup": "Repository inspection, module visibility port, extraction of unchanged theorem signatures, Comparator packaging and metadata preparation. Exact model identifier not independently recorded.",
-        "prompting_notes": "Prepare a Palomar version while preserving the v0.1.0 GitHub release and Zenodo record."
+        "tool_setup": "AI-assisted mathematical exploration, explicit compactness and intermediate-value arguments, Lean formalization of new characterization and counterexamples, independent Challenge/Comparator integration, and preservation checks.",
+        "prompting_notes": "Seek a substantive mathematical extension on the separate preparation branch, while preserving main, v0.1.0 and Zenodo. Do not resubmit automatically."
       }
     ],
     "spend_usd": "not tracked",
     "notes": "Human project initiation and repository maintenance by Alessandro Odasso. AI contributions are disclosed and are not evidence of novelty. Deliberate Challenge sorry placeholders are excluded from proof-development counts."
   },
   "fidelity": {
-    "divergences": "The selected theorem signatures and all explicit premises are retained from v0.1.0. The final theorem assumes reachability of the chosen vector, rather than deriving global transitivity. The infinitesimal result additionally assumes derivatives and normalization at zero. The main result does not establish the whole foundational or Lie-theoretic discussion in the manuscript."
+    "divergences": "The four archived signatures remain unchanged. New modules extend the source by adding a continuous-action characterization and explicit model, removing mirror and per-vector reachability premises in that continuous setting. This is an assumption tradeoff, not a strict weakening of every archived premise. The new statements are described in RESEARCH.md and are not attributed to the archived manuscript. The finite-symmetry counterexample does not satisfy the additive real-action premise."
   },
   "review": {
     "status": "agent-reviewed; independent mathematical peer review not established",
     "reviewers": [],
-    "notes": "The archived README reports public Lean compilation and axiom audits. This preparation checks signature fidelity and packaging; its own validation results and any remaining limitations are recorded in PALOMAR.md. No human expert endorsement is claimed."
+    "notes": "Agent mathematical review and Lean proof checking are distinct from human expert review and from establishing research novelty. The classical context includes Dewar, Infinitesimal rigidity in normed planes, arXiv:1812.06022v1 section 2.2 Proposition 2.6; no claim of a newly discovered characterization is made. Current verification results are in VERIFICATION.md."
   },
   "alignment": {
     "namespace": "PythagoreanIsotropy",
@@ -111,6 +111,48 @@
         "lean": "PythagoreanIsotropy.pythagoras_from_metric_free_quarter_turn",
         "module": "PythagoreanIsotropy",
         "status": "proved in the source development; see PALOMAR.md for port validation"
+      },
+      {
+        "source": "Continuity of the additive action implies axis reachability for every displacement.",
+        "lean": "PythagoreanIsotropy.axis_reachable_of_continuous_action",
+        "module": "ContinuousIsotropy",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "The action preserves x²+y² without any length or mirror premise.",
+        "lean": "PythagoreanIsotropy.continuous_action_preserves_quadratic",
+        "module": "CompactIsotropy",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "Axial calibration and rigidity determine the entire Euclidean length function, with no mirror or reachability premise.",
+        "lean": "PythagoreanIsotropy.length_eq_sqrt_without_mirror",
+        "module": "CompactIsotropy",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "A calibrated function admits the stated continuous action if and only if it equals Euclidean length.",
+        "lean": "PythagoreanIsotropy.continuous_isotropy_iff_euclidean_length",
+        "module": "IsotropyCharacterization",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "The max-norm has exactly four rotation-coordinate linear isometries.",
+        "lean": "PythagoreanIsotropy.Counterexamples.boxLength_rigid_normal_iff",
+        "module": "IsotropyCounterexamples",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "The max-norm satisfies finite symmetries but fails the Pythagorean identity.",
+        "lean": "PythagoreanIsotropy.Counterexamples.boxLength_not_pythagorean",
+        "module": "IsotropyCounterexamples",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
+      },
+      {
+        "source": "The max-norm admits no additive real linear rigid action containing a primitive quarter-turn, even without continuity.",
+        "lean": "PythagoreanIsotropy.Counterexamples.boxLength_no_additive_quarter_turn_action",
+        "module": "IsotropyCounterexamples",
+        "status": "new proof development; see VERIFICATION.md for exact validation"
       }
     ]
   },
