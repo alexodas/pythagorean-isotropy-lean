@@ -27,21 +27,42 @@ The independent Challenge now selects eleven theorems and six definitions.
 Its eleven `sorry` placeholders are intentional specification placeholders.
 The proof modules have no admitted proofs or new global axioms.
 
-Completed while developing this extension:
+## Successful integrated verification
+
+The complete extension at commit
+`a7971a5c8f282c64845286f80e1771d8f7205664` passed
+[GitHub verification run 39242062564](https://github.com/alexodas/pythagorean-isotropy-lean/actions/runs/39242062564).
+
+- The full Lake build succeeded, including `EuclideanModel`, the final
+  existence equivalence, the counterexamples, Challenge, and Solution.
+- Comparator accepted all eleven requested theorem declarations and six
+  definitions against the independent Challenge.
+- The configured independent-kernel replay with the toolchain's bundled
+  NanoDa and con-ron completed successfully in the Linux sandbox.
+- Only `propext`, `Classical.choice`, and `Quot.sound` are permitted.
+- The archived proof text, source assets and original four signatures
+  passed their preservation checks.
+
+The subsequent README title, metadata project title and this verification
+record are documentation updates; the tested Lean sources and Comparator
+configuration are unchanged from that successful commit.
+
+Additional local checks completed while developing this extension:
 
 - The archive/signature preservation script and source-format checks pass.
 - `ContinuousIsotropy.lean` compiled successfully with the pinned Lean
   `v4.35.0-rc2`; its reachability and length audits report only `propext`,
   `Classical.choice`, and `Quot.sound`.
 - The compact multiplicative-character lemma compiled successfully.
-- The initial max-norm development, including exact classification of its
-  normal-form isometries, compiled successfully. A later direct-action
-  impossibility corollary is included in the full verification target.
+- The max-norm development, including its direct-action impossibility
+  corollary, compiled successfully, with the same standard axiom set.
+- `CompactIsotropy.lean` compiled successfully with standard axiom audits
+  for quadratic preservation and the mirror-free length characterization.
+- Metadata validates against the pinned official v0.4 schema.
 
-The full integrated Lake build and eleven-theorem Comparator check are
-required for the current commit. Consult the
+Consult the
 [Palomar preparation workflow](https://github.com/alexodas/pythagorean-isotropy-lean/actions/workflows/palomar.yml)
-for its exact result; a green run must correspond to the current source.
+for the check of any later changes; a green run must correspond to their source.
 Local Debian Bubblewrap is too old for the bundled Comparator, so the full
 sandboxed comparison and independent kernels run on the Ubuntu CI runner.
 The sandbox is not disabled to obtain a local result.

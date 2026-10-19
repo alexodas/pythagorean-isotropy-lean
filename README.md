@@ -1,4 +1,4 @@
-# The Coordinate Pythagorean Theorem from Planar Isotropy — Lean 4
+# Continuous Planar Isotropy and Euclidean Length — Lean 4
 
 > **Continuous-isotropy development (package 0.2.0; no new release).**
 > The new theorem characterizes all calibrated functions admitting a continuous

@@ -1,7 +1,7 @@
 {
   "version": "v0.4",
   "project": {
-    "name": "The Coordinate Pythagorean Theorem from Planar Isotropy",
+    "name": "Continuous Planar Isotropy and Euclidean Length",
     "description": "A characterization of arbitrary axially calibrated planar length functions admitting a continuous additive linear action containing a primitive quarter-turn: exactly the Euclidean square-root formula. Compactness derives quadratic preservation without mirror symmetry; the intermediate value theorem derives global axis reachability. An explicit trigonometric model proves the converse. A max-norm counterexample classifies its four rotation-coordinate isometries and excludes an additive real quarter-turn action. This extends the archived conditional derivation; historical novelty is not claimed.",
     "authors": [
       "Alessandro Odasso"
