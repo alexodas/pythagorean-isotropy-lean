@@ -1,4 +1,4 @@
-name: Build and publish AI-disclosure manuscript PDF
+name: Build AI-disclosure manuscript PDF artifact
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-manuscript:
@@ -47,15 +47,3 @@ jobs:
         with:
           name: pythagorean-isotropy-manuscript
           path: manuscript/pythagorean_isotropy_ai_disclosure.pdf
-
-      - name: Commit generated PDF to the public repository
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add manuscript/pythagorean_isotropy_ai_disclosure.pdf
-          if git diff --cached --quiet; then
-            echo "PDF is already up to date."
-          else
-            git commit -m "Publish AI-disclosure manuscript PDF"
-            git push origin HEAD:main
-          fi
