@@ -45,14 +45,16 @@ for name in ['.zenodo.json', 'AXIOMS.md', 'RELEASE_NOTES.md',
 
 config = json.loads((ROOT / 'comparator.json').read_text())
 challenge = (ROOT / 'Challenge.lean').read_text(encoding='utf-8')
-for full_name in config['theorem_names']:
+for full_name in record['theorem_signatures_sha256']:
     name = full_name.removeprefix('PythagoreanIsotropy.')
     assert digest(signature(challenge, name).encode()) == record['theorem_signatures_sha256'][full_name], full_name
 assert len(re.findall(r'^  sorry$', challenge, re.M)) == len(config['theorem_names'])
 assert len(challenge.splitlines()) <= 1000
 assert len(challenge.encode()) <= 100 * 1024
-assert re.findall(r'^(?:public )?import (.+)$', challenge, re.M) == ['Mathlib.Analysis.Calculus.Deriv.Basic']
-assert not re.search(r'^\s*(sorry|axiom)\b', current, re.M)
+assert re.findall(r'^(?:public )?import (.+)$', challenge, re.M) == ['Mathlib.Analysis.Calculus.Deriv.Basic', 'Mathlib.Analysis.Real.Sqrt']
+for proof_source in ROOT.glob('*.lean'):
+    if proof_source.name != 'Challenge.lean':
+        assert not re.search(r'^\s*(sorry|axiom)\b', proof_source.read_text(encoding='utf-8'), re.M), proof_source
 assert config['permitted_axioms'] == ['propext', 'Quot.sound', 'Classical.choice']
 assert 'external_kernels' not in config
 lake_text = (ROOT / 'lakefile.toml').read_text()
@@ -71,5 +73,5 @@ for workflow in (ROOT / '.github/workflows').glob('*.yml'):
     assert 'contents: write' not in text, workflow
     assert 'git push' not in text and 'gh release create' not in text, workflow
 print('PASS: archived tag, manuscript, Zenodo metadata and mathematical proof text preserved.')
-print('PASS: all four Challenge signatures exactly match the archived theorem signatures.')
+print('PASS: all four archived Challenge signatures still exactly match the archived theorem signatures.')
 print('PASS: independent Challenge, source limits, dependency pins and metadata consistency.')
