@@ -34,7 +34,7 @@ reconstructed = 'import Mathlib\n' + body
 reconstructed = reconstructed.replace('@[expose] def ', 'def ')
 assert digest(reconstructed.encode()) == record['original_proof_text_sha256'], 'Proof development changed beyond module visibility'
 
-for name in ['.zenodo.json', 'AXIOMS.md', 'RELEASE_NOTES.md',
+for name in ['AXIOMS.md', 'RELEASE_NOTES.md',
              'manuscript/pythagorean_isotropy_ai_disclosure.pdf',
              'manuscript/pythagorean_isotropy_ai_disclosure.tex']:
     path = ROOT / name
@@ -43,6 +43,13 @@ for name in ['.zenodo.json', 'AXIOMS.md', 'RELEASE_NOTES.md',
     if (ROOT / '.git').exists():
         assert digest(git('show', ARCHIVED + ':' + name)) == record['protected_files_sha256'][name], name
 
+# Preserve the original Zenodo metadata in the archived v0.1.0 commit.
+# The current .zenodo.json may evolve with new releases.
+if (ROOT / '.git').exists():
+    archived_zenodo = git('show', ARCHIVED + ':.zenodo.json')
+    assert digest(archived_zenodo) == record['protected_files_sha256']['.zenodo.json'], \
+        'archived .zenodo.json'
+    
 config = json.loads((ROOT / 'comparator.json').read_text())
 challenge = (ROOT / 'Challenge.lean').read_text(encoding='utf-8')
 for full_name in record['theorem_signatures_sha256']:
