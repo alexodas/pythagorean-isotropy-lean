@@ -130,11 +130,19 @@ bash scripts/verify-comparator.sh
 
 The script uses `lake comparator`, Bubblewrap sandboxing, and the bundled independent checkers **NanoDa** and **con-ron**. It rejects unsupported local sandbox setups rather than disabling the sandbox. The permitted **Lean kernel** axioms are `propext`, `Classical.choice`, and `Quot.sound`. These are logical foundations in Lean; they are **not** the geometric hypotheses such as rigidity and continuity. Refer to [`VERIFICATION.md`](./VERIFICATION.md) for previously observed successful checks; never transfer their verification status to untested future source edits.
 
-The [Palomar preparation workflow](./.github/workflows/palomar.yml)
-runs on pull requests, pushes to `palomar-preparation`,
-and manual dispatches. 
+
+## Automated verification
+
+The [Palomar verification workflow](./.github/workflows/palomar.yml)
+runs on pull requests and can also be triggered manually.
+
 The [Lean proof workflow](./.github/workflows/lean.yml)
-runs on `main`, pull requests, and manual dispatches. The archived-development workflow is [`.github/workflows/lean.yml`](./.github/workflows/lean.yml). Only a successful run corresponding to the actual commit verifies that version of the repository.
+runs on `main`, pull requests, and manual dispatches.
+
+Only a successful verification run corresponding to the
+actual commit establishes the verification status of
+that repository revision.
+
 
 
 ## Palomar verification and scientific-review status
