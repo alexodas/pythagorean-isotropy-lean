@@ -1,16 +1,8 @@
-
 name: Lean and Comparator verification
 
 on:
   push:
     branches: [main]
-  pull_request:
-  workflow_dispatch:
-
-
-on:
-  push:
-    branches: [palomar-preparation]
   pull_request:
   workflow_dispatch:
 
