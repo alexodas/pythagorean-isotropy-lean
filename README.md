@@ -4,7 +4,7 @@ This repository formalizes a mathematical answer to a precise question:
 
 > **If planar length is initially an unknown function, when do rigid planar symmetries force the Pythagorean formula?**
 
-The current main branch include a **characterization**: an axially calibrated function \(L : \mathbb R^2 \to \mathbb R\) admits a continuous additive **linear** action containing a primitive oriented quarter-turn and preserving \(L\) **if and only if**
+The current main branch includes a **characterization**: an axially calibrated function \(L : \mathbb R^2 \to \mathbb R\) admits a continuous additive **linear** action containing a primitive oriented quarter-turn and preserving \(L\) **if and only if**
 
 \[
 L(x,y)=\sqrt{x^2+y^2}\quad\text{for every }x,y.
@@ -116,7 +116,7 @@ cd manuscript
 latexmk -pdf -interaction=nonstopmode -halt-on-error continuous_planar_isotropy_explained.tex
 ```
 
-The existing [`build-manuscript.yml`](./.github/workflows/build-manuscript.yml) is a historical workflow targeting the archived filename on `main`; it is **not** the builder for this separately named current edition. No workflow or toolchain configuration is changed for this documentation revision.
+The existing [`build-manuscript.yml`](./.github/workflows/build-manuscript.yml) is a historical workflow targeting the archived filename on `main`; it is **not** the builder for this separately named current edition.
 
 ### Comparator: what it checks
 
@@ -130,9 +130,11 @@ bash scripts/verify-comparator.sh
 
 The script uses `lake comparator`, Bubblewrap sandboxing, and the bundled independent checkers **NanoDa** and **con-ron**. It rejects unsupported local sandbox setups rather than disabling the sandbox. The permitted **Lean kernel** axioms are `propext`, `Classical.choice`, and `Quot.sound`. These are logical foundations in Lean; they are **not** the geometric hypotheses such as rigidity and continuity. Refer to [`VERIFICATION.md`](./VERIFICATION.md) for previously observed successful checks; never transfer their verification status to untested future source edits.
 
-The branch verification workflow is [`.github/workflows/palomar.yml`](./.github/workflows/palomar.yml). The archived-development workflow is [`.github/workflows/lean.yml`](./.github/workflows/lean.yml). Only a successful run corresponding to the actual commit verifies that version of the repository.
-
-## Palomar preparation and publication procedure
+The [Palomar preparation workflow](./.github/workflows/palomar.yml)
+runs on pull requests, pushes to `palomar-preparation`,
+and manual dispatches. 
+The [Lean proof workflow](./.github/workflows/lean.yml)
+runs on `main`, pull requests, and manual dispatches. The archived-development workflow is [`.github/workflows/lean.yml`](./.github/workflows/lean.yml). Only a successful run corresponding to the actual commit verifies that version of the repository.
 
 
 ## Palomar verification and scientific-review status
