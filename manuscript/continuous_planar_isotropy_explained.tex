@@ -1,0 +1,393 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\geometry{left=23mm,right=23mm,top=23mm,bottom=23mm}
+\hypersetup{
+  hidelinks,
+  pdftitle={Continuous Planar Isotropy and the Pythagorean Formula: A Lean-Formalized Explanation},
+  pdfauthor={ChatGPT (GPT-6, High thinking effort); prompted by Alessandro Odasso},
+  pdfsubject={AI-generated explanatory manuscript with explicit research-prompt disclosure}
+}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\setlist[itemize]{itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{itemsep=4pt,topsep=5pt}
+\title{\textbf{Continuous Planar Isotropy and the Pythagorean Formula}\\[0.35em]
+\large A Plain-English Explanation of Lean-Formalized Hypotheses and Proofs}
+\author{AI-generated mathematical exposition: \textbf{ChatGPT (GPT-6, High thinking effort)}\\
+Research question and initiating prompt: \textbf{Alessandro Odasso}}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Why should the length of a displacement with coordinates $(x,y)$ be
+$\sqrt{x^2+y^2}$? In this manuscript, length begins as an arbitrary
+function, not as that familiar formula. We explain two related
+implications formalized in Lean~4: a conditional Pythagorean theorem
+using rigid motions, reflection, and axis reachability; and a stronger
+characterization in which continuity of a linear planar action
+\emph{derives} axis reachability and reflection symmetry. An explicit
+trigonometric model proves the converse, while the maximum norm shows
+why finite rotational symmetries alone are insufficient. The proofs
+are conditional statements about explicitly assumed linear motions;
+they do not construct geometry from incidence axioms or establish
+historical novelty.
+\end{abstract}
+
+\section{Research prompt, authorship, and scope}
+
+\noindent\textbf{AI and prompt disclosure.}
+Alessandro Odasso initiated the research question by asking OpenAI's
+ChatGPT whether it could find an \emph{original proof of the
+Pythagorean theorem}. The manuscript text and proposed mathematical
+argument were generated with ChatGPT (GPT-6, High thinking effort);
+the accompanying formalization and subsequent extensions were
+developed with AI assistance and checked in Lean~4/Mathlib. The
+word \emph{original} reports Odasso's objective, not a verified
+claim of priority, novelty, or originality in the mathematical
+literature. Lean verifies formal implications from stated hypotheses,
+not such historical claims.
+
+This text is an accessible explanation of what the repository
+actually formalizes. Its logical starting point is not a triangle
+diagram or the distance formula: it is an unknown function of two
+coordinates and an explicitly described family of linear
+transformations. The key mathematical point is to keep \emph{length}
+separate from the coordinate expression that the proof eventually
+forces.
+
+\section{The objects and assumptions}
+
+Represent a displacement by $(x,y)\in\mathbb R^2$. Let
+\[
+ L:\mathbb R^2\longrightarrow\mathbb R
+\]
+be a \emph{primitive length function}. Initially there is no
+definition $L(x,y)=\sqrt{x^2+y^2}$, no norm axiom, and no
+assumed continuity of $L$.
+
+Each planar map below is linear and is represented by a real
+$2\times 2$ matrix. Write $F_t$ for a one-parameter family of
+such maps and $Q$ for a distinguished quarter-turn. The assumptions
+of the main characterization are:
+\begin{enumerate}
+ \item \textbf{Action law.} For all $s,t$, $F_{s+t}=F_s\circ F_t$.
+ \item \textbf{Primitive oriented quarter-turn.}
+       $Q(1,0)=(0,1)$ and $Q^2(x,y)=(-x,-y)$ for all $x,y$.
+       The matrix of $Q$ is \emph{not} assumed in advance.
+ \item \textbf{Membership.} There is a real parameter $\theta$
+       for which $F_\theta=Q$.
+ \item \textbf{Continuous action coefficients.}
+       The first-column entries
+       $t\mapsto (F_t)_{11}$ and
+       $t\mapsto (F_t)_{21}$ are continuous.
+ \item \textbf{Axial calibration.}
+       $L(z,0)=|z|$ for every real $z$.
+ \item \textbf{Rigidity.}
+       $L(F_t(x,y))=L(x,y)$ for every $t,x,y$.
+\end{enumerate}
+These premises assume a sufficiently rich \emph{linear} motion
+action; they do not infer its existence from incidence or
+congruence alone. In contrast, we do \emph{not} assume that
+$L$ is positive, continuous, homogeneous, subadditive, or
+symmetric under reflection. The latter properties will follow
+from identifying $L$.
+
+\begin{theorem}[Characterization formalized in Lean]
+\label{thm:main}
+For every function $L$ satisfying axial calibration,
+\[
+\begin{split}
+ &\text{there exist }F,Q\text{ satisfying the action,
+ quarter-turn,}\\[-1pt]
+ &\text{membership, continuity, and rigidity hypotheses}\\
+ &\qquad\Longleftrightarrow\qquad
+ L(x,y)=\sqrt{x^2+y^2}\quad\text{for all }x,y.
+\end{split}
+\]
+In particular, under those hypotheses every displacement with
+$c=L(a,b)$ satisfies $a^2+b^2=c^2$.
+\end{theorem}
+
+The equivalence is the Lean theorem
+\texttt{continuous\_isotropy\_iff\_euclidean\_length}.
+We explain its forward and reverse implications in the order
+used by the proof modules.
+
+\section{Forward implication: five proof steps}
+
+\subsection*{Step 1. The quarter-turn and the shape of every motion}
+
+Applying the square law to $(1,0)$ gives
+\[
+ Q(0,1)=Q^2(1,0)=(-1,0).
+\]
+Linearity then forces
+\[
+ Q(x,y)=(-y,x),\qquad
+ J=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+\]
+This matrix is a \emph{conclusion}, not a premise.
+By the action law and $F_\theta=Q$,
+\[
+ F_tQ=F_{t+\theta}=F_{\theta+t}=QF_t.
+\]
+A real $2\times2$ matrix commuting with $J$ must have
+the form
+\[
+ F_t=\begin{pmatrix}u(t)&-v(t)\\v(t)&u(t)\end{pmatrix},
+ \qquad
+ F_t(x,y)=(u(t)x-v(t)y,\;v(t)x+u(t)y).
+ \tag{1}\label{eq:normal}
+\]
+The action law and the invertibility of $Q$ also give $F_0=I$,
+so $u(0)=1$, $v(0)=0$.
+These deductions correspond to
+\texttt{primitive\_quarter\_turn\_is\_J},
+\texttt{primitive\_quarter\_turn\_forces\_flow\_shape}, and
+\texttt{action\_zero\_of\_primitive\_quarter\_turn}.
+
+\subsection*{Step 2. Continuity excludes radial scaling}
+
+Define the nonnegative quantity
+\[
+ s(t)=u(t)^2+v(t)^2.
+\]
+Multiplying matrices of the form~\eqref{eq:normal} yields
+\[
+ s(t+r)=s(t)s(r),\quad s(0)=1,\quad s(\theta)=1.
+ \tag{2}
+\]
+Consequently $s(t+\theta)=s(t)$. The parameter $\theta$
+cannot be zero because $F_0=I$ whereas $Q(1,0)=(0,1)$.
+By the coefficient continuity, $s$ is continuous with a
+nonzero period, hence has a compact range and a greatest
+value $M\ge 1$.
+
+Choose $r$ with $s(r)=M$. For every $t$,
+\[
+ s(t)M=s(t+r)\le M,
+\]
+so $s(t)\le1$. But (2) also gives
+$s(t)s(-t)=s(0)=1$, and applying the same bound
+to $-t$ implies $s(t)\ge1$. Therefore
+\[
+ \boxed{u(t)^2+v(t)^2=1\quad\text{for every }t.}
+ \tag{3}
+\]
+Expanding the transformed coordinates now shows
+\[
+ (ux-vy)^2+(vx+uy)^2
+ =(u^2+v^2)(x^2+y^2)=x^2+y^2. \tag{4}
+\]
+This does \emph{not} use $L$, its reflection symmetry, or any
+derivative. In Lean the main ingredients are
+\texttt{periodic\_nonnegative\_character\_eq\_one} and
+\texttt{continuous\_action\_preserves\_quadratic}.
+
+\subsection*{Step 3. Every displacement reaches the positive axis}
+
+For a fixed displacement $(a,b)$, consider the second coordinate
+of $F_t(a,b)$. By~\eqref{eq:normal} it is the continuous function
+\[
+ f(t)=v(t)a+u(t)b.
+\]
+At $t=0$ its value is $b$. At $t=2\theta$,
+the action gives $F_{2\theta}=Q^2=-I$, so its
+value is $-b$. The intermediate value theorem therefore
+provides a parameter $T$ with $f(T)=0$.
+Write $F_T(a,b)=(z,0)$. If $z<0$, composing with
+the half-turn $F_{2\theta}$ changes $(z,0)$
+to $(-z,0)$. Thus in every case
+\[
+ \exists T,z\quad z\ge0,\qquad F_T(a,b)=(z,0).
+ \tag{5}
+\]
+The formal result is
+\texttt{axis\_reachable\_of\_continuous\_action}.
+This is a derived fact, not an extra axiom in the
+continuous theorem.
+
+\subsection*{Step 4. Compare the two descriptions of the axis point}
+
+Equation~(4) applied to~(5) gives
+\[
+ z^2=a^2+b^2.
+\]
+On the other hand, rigidity and axial calibration say
+\[
+ L(a,b)=L(F_T(a,b))=L(z,0)=|z|=z.
+\]
+Because $z\ge0$,
+\[
+ \boxed{L(a,b)=\sqrt{a^2+b^2}},\qquad
+ \boxed{a^2+b^2=L(a,b)^2}. \tag{6}
+\]
+The length formula has been \emph{proved} under the
+action assumptions, rather than used to define $L$.
+This is \texttt{length\_eq\_sqrt\_without\_mirror}.
+The identity in~(6) is the coordinate
+Pythagorean formula for the displacement whose primitive
+length is $c=L(a,b)$.
+
+\subsection*{Step 5. Mirror symmetry is a consequence}
+
+Formula~(6) immediately yields
+\[
+ L(x,-y)=\sqrt{x^2+(-y)^2}
+        =\sqrt{x^2+y^2}=L(x,y).
+\]
+Thus mirror symmetry, unlike in the earlier conditional proof,
+is not a hypothesis. Lean records this as
+\texttt{mirror\_symmetry\_of\_continuous\_isotropy}.
+
+\section{Reverse implication: an explicit model}
+
+The reverse direction does not merely assert that such
+motions ought to exist. For
+$L(x,y)=\sqrt{x^2+y^2}$, set
+\[
+ F_t=\begin{pmatrix}
+ \cos t&-\sin t\\
+ \sin t& \cos t
+ \end{pmatrix},\qquad Q=F_{\pi/2}.
+\]
+The trigonometric addition identities prove the action law;
+sine and cosine are continuous; $Q$ has the required
+quarter-turn behavior; and the usual identity
+$\sin^2t+\cos^2t=1$ proves rigidity.
+The Lean definitions \texttt{standardRotation},
+\texttt{standardQuarterTurn}, and the theorem
+\path{continuous_isotropy_model_of_euclidean_length}
+formalize this converse. This construction uses ordinary real
+analysis; it is not a derivation of trigonometry from synthetic
+geometry.
+
+\section{How the earlier conditional theorem fits}
+
+The archived Lean theorem
+\texttt{pythagoras\_from\_metric\_free\_quarter\_turn}
+does \emph{not} require continuity of the action.
+Instead, in addition to the action, quarter-turn,
+membership, axial calibration, and rigidity,
+it explicitly assumes:
+\begin{itemize}
+ \item \emph{Mirror symmetry:} $L(x,-y)=L(x,y)$;
+ \item \emph{Axis reachability for the selected vector:}
+       $F_T(a,b)=(z,0)$ for some $z\ge0$;
+ \item \emph{Length identification:} $c=L(a,b)$.
+\end{itemize}
+Its proof obtains the normal form~\eqref{eq:normal}
+from the quarter-turn. Instead of Step~2's compactness
+argument, mirror symmetry and rigidity show
+\[
+ L(u,v)=1,\quad L(u,-v)=1,\quad
+ L(u^2+v^2,0)=1.
+\]
+Calibration and $u^2+v^2\ge0$ imply
+$u^2+v^2=1$. With the \emph{assumed} axis
+reachability, the algebraic calculation in Step~4 yields
+$a^2+b^2=c^2$.
+
+The two theorems therefore trade assumptions:
+the older theorem permits a discontinuous action but
+requires mirror symmetry and an axis hit; the newer
+theorem requires continuity of two action coefficients
+and \emph{derives} both consequences. This is not a claim
+that every single assumption in one statement is weaker
+than the corresponding assumption in the other.
+
+\section{Why one quarter-turn is not enough}
+
+Consider the maximum norm
+\[
+ B(x,y)=\max\{|x|,|y|\}.
+\]
+It is continuous, axially calibrated, positive definite,
+homogeneous, and satisfies the triangle inequality.
+It is also invariant under reflection and the four
+coordinate quarter-turns. But
+\[
+ B(1,1)=1,\qquad 1^2+1^2=2\ne B(1,1)^2.
+\]
+So a finite collection of elementary symmetries cannot
+by itself force the Euclidean length formula.
+
+Lean proves more: among matrices of the form~\eqref{eq:normal},
+the only $B$-rigid ones are the four signed coordinate
+quarter-turns. A real additive action containing $Q$
+would also contain a rigid square root $F_{\theta/2}$
+of $Q$; no such matrix exists for $B$. Hence no
+$B$-rigid additive real linear action containing
+the primitive quarter-turn exists, \emph{even without}
+a continuity hypothesis. The formal statements include
+\texttt{boxLength\_rigid\_normal\_iff},
+\texttt{boxLength\_not\_pythagorean}, and
+\texttt{boxLength\_no\_additive\_quarter\_turn\_action}.
+This example is an obstruction to \emph{finite}
+symmetries, not a counterexample satisfying all
+the hypotheses of either main theorem.
+
+\section{Infinitesimal interpretation and proof boundaries}
+
+If the motion coefficients have the stated derivatives
+at zero, the infinitesimal generator has the form
+$\omega J$ after the radial derivative is shown to
+vanish. Algebraically, for a symmetric matrix
+$M$, the infinitesimal invariance equation
+$J^TM+MJ=0$ forces $M=\lambda I$.
+The repository contains separate Lean statements on
+the generator, conserved quadratic expressions, and
+the classification of infinitesimally invariant
+symmetric forms. These \emph{supplement} the group
+argument above; differentiability and Lie theory are
+not needed for Theorem~\ref{thm:main}.
+
+The precise boundary matters. Lean establishes
+that the displayed conclusions follow from formal
+hypotheses, and the explicit model shows joint
+satisfiability in standard real analysis. It does
+not prove that the action exists from bare incidence
+or primitive congruence axioms, establish a minimal
+axiom system, or certify historical novelty. The
+principle that rich linear isometry groups select
+Euclidean structure has substantial classical context.
+A kernel-level axiom audit concerns Lean's logical
+dependencies, not whether these \emph{geometric}
+hypotheses are minimal.
+
+\section{Where to find the formal proofs}
+
+The proof steps above correspond to the following
+files in the \texttt{palomar-preparation} branch:
+\begin{itemize}
+ \item \texttt{PythagoreanIsotropy.lean}: primitive quarter-turn,
+       motion normal form, and the archived conditional theorem;
+ \item \texttt{ContinuousIsotropy.lean}: derived axis
+       reachability;
+ \item \path{CompactCharacter.lean}: the periodic-character
+       argument;
+ \item \path{CompactIsotropy.lean}: quadratic preservation
+       and length identification without mirror symmetry;
+ \item \texttt{EuclideanModel.lean} and
+       \path{IsotropyCharacterization.lean}: explicit model
+       and the characterization equivalence;
+ \item \path{IsotropyCounterexamples.lean}: maximum-norm
+       obstruction.
+\end{itemize}
+\noindent\textbf{Repository:}
+\href{https://github.com/alexodas/pythagorean-isotropy-lean/tree/palomar-preparation}{pythagorean-isotropy-lean (palomar-preparation branch)}.
+The root \texttt{README.md} provides reproducible toolchain,
+Comparator, verification, archival and possible Palomar
+publication details; those operational details are deliberately
+kept out of this mathematical exposition.
+
+\end{document}
