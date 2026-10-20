@@ -26,8 +26,37 @@ differentiability is assumed in that archived theorem. The new continuous
 characterization below instead derives reachability and mirror symmetry.
 The separate infinitesimal theorem has its own derivative assumptions.
 
-This is a formalized conditional derivation of a known identity. It establishes
-neither historical novelty nor independence or minimality of the hypotheses.
+## Mathematical significance of the continuous-action characterization
+
+The extension characterizes Euclidean length starting from an arbitrary
+axially calibrated function `L : ℝ → ℝ → ℝ`. It does not initially assume
+that `L` is a norm, continuous, nonnegative, homogeneous, subadditive,
+or invariant under reflections. These properties follow after `L` is
+identified with Euclidean length. The linearity of the maps and continuity
+of the two action coefficients remain explicit hypotheses.
+
+The central intermediate step does not refer to `L`. The additive action
+law and the presence of a primitive quarter-turn make
+`s(t) = (F t).a ^ 2 + (F t).c ^ 2` a continuous, periodic, multiplicative
+character. Compactness and a maximum argument show `s(t) = 1` for all
+`t`. Thus the action preserves `x²+y²` before any length formula is
+established, with no need for mirror symmetry or differentiability.
+Separately, the intermediate value theorem gives axis reachability for
+every vector. Rigidity together with `L(z,0) = |z|` then forces
+`L(x,y) = sqrt(x²+y²)`.
+
+The explicit trigonometric model provides the reverse implication.
+The max-norm counterexample separates continuous isotropy from finite
+quarter-turn symmetry, which alone does not determine Euclidean length.
+The broader connection between rich linear isometry groups and Euclidean
+geometry is classical. The contribution presented here is an explicitly
+scoped, machine-checked characterization and its finite-symmetry
+obstruction, not a claim of historical novelty or minimal assumptions.
+
+The archived theorem is a conditional derivation of a known identity; the
+continuous-action extension characterizes the full length function under
+additional continuity assumptions. Neither part establishes historical
+novelty or independence or minimality of the hypotheses.
 The Lie-theoretic discussion in the manuscript is not advertised as wholly
 formalized. See PALOMAR.md, AXIOMS.md and formalization.yaml for provenance.
 -/
