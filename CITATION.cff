@@ -19,6 +19,7 @@ title: "Continuous Planar Isotropy and Euclidean Length: A Lean-Verified Charact
 authors:
   - family-names: Odasso
     given-names: Alessandro
+    orcid: https://orcid.org/0009-0008-1900-0330
 
 abstract: >-
   Lean 4/Mathlib formalization characterizing Euclidean length
